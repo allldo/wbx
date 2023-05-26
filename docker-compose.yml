@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  web:
+    restart: always
+    build: .
+    ports:
+    - "8000:8000"
+    depends_on:
+      - database
+    volumes:
+      - .:/drf_src
+    environment:
+      DEBUG: 'true'
+
+
+  database:
+    restart: always
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=wbx
+    volumes:
+      - db:/var/lib/postgresql/data/
+
+volumes:
+  db:
